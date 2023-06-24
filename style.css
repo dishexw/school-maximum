@@ -8,9 +8,10 @@
     border- radius: 5px;
     font-size: 22px;
     padding: 10px;
+    text-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em green;
  }
  h3{
-    margin-top: 100px;
-    margin-left: 100px;
-    margin-bottom: 200px;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-bottom: 100px;
  }
