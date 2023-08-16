@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib import admin
 from django.utils import timezone
 from django.utils.html import format_html
+from django.contrib.auth import get_user_model
+from django.utils.safestring import mark_safe
+
+User = get_user_model()
 # Create your models here.
 
 
@@ -12,6 +16,9 @@ class Advertisement(models.Model):
     auction = models.BooleanField('Торг', help_text='Отметье, если торг уместен')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, verbose_name='пользователь', on_delete=models.CASCADE)
+    image = models.ImageField('Изображение', upload_to='advertisements/')
+
     class Meta:
         db_table = 'advertisements'
 
@@ -37,5 +44,14 @@ class Advertisement(models.Model):
             )
         else:
             return self.updated_at.strftime("%d.%m.%Y в %H:%M:%S")
+
+    @admin.display(description='Изображение')
+    def image_img(self):
+        if self.image:
+            return mark_safe(u'<a href="{0}" target="_blank"><img src="{0}" width="50"/></a>'.format(self.image.url))
+        else:
+            return 'Нет изображения'
+    image_img.short_description = 'Изображение'
+    image_img.allow_tags = True
 
 
