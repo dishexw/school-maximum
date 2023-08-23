@@ -5,6 +5,8 @@ from django.utils.html import format_html
 from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 
+from django.forms import ModelForm
+
 User = get_user_model()
 # Create your models here.
 
@@ -24,6 +26,8 @@ class Advertisement(models.Model):
 
     def __str__(self):
         return f"Advertisement(id={self.id}, first_name={self.first_name}, price={self.price})"
+
+
 
     @admin.display(description='Дата создания')
     def created_date(self):
@@ -53,5 +57,10 @@ class Advertisement(models.Model):
             return 'Нет изображения'
     image_img.short_description = 'Изображение'
     image_img.allow_tags = True
+
+class AdvertisementForm(ModelForm):
+    class Meta:
+        model = Advertisement
+        fields = ['first_name', 'description', 'price', 'auction', 'image']
 
 
